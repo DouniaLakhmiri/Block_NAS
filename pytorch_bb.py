@@ -30,13 +30,13 @@ Xin = Lin[0].split()
 fin.close()
 
 
-hypernomad_home = '/local1/lakhdoun/HyperNOMAD/'
-blackbox_path = hypernomad_home + 'src/blackbox/blackbox.py'
+# hypernomad_home = '/local1/lakhdoun/HyperNOMAD/'
+# blackbox_path = hypernomad_home + 'src/blackbox/blackbox.py'
 
 syst_cmd = 'OMP_NUM_THREADS=3 python3 ' + blackbox_path + ' CIFAR10 '
 
 # syst_cmd = 'OMP_NUM_THREADS=3 python3 blackbox.py CIFAR10 '
-out_file = hypernomad_home + 'examples/logs_training_'
+out_file = hypernomad_home + 'logs_training_'
 
 for i in range(len(Xin)):
     syst_cmd += str(Xin[i]) + ' '
