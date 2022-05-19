@@ -36,7 +36,7 @@ fin.close()
 syst_cmd = 'OMP_NUM_THREADS=3 python3 ' + blackbox_path + ' CIFAR10 '
 
 # syst_cmd = 'OMP_NUM_THREADS=3 python3 blackbox.py CIFAR10 '
-out_file = hypernomad_home + 'logs_training_'
+out_file = 'logs_training_'
 
 for i in range(len(Xin)):
     syst_cmd += str(Xin[i]) + ' '
