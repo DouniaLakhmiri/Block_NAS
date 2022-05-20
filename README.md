@@ -36,3 +36,11 @@ $ pip install thop
 $ python pytorch_bb.py CIFAR10 x.txt 
 ```
 
+## NOMAD
+
+
+```
+$ module load gcc
+$ nomad -i
+$ nohup nomad parameter_file.txt &
+```
