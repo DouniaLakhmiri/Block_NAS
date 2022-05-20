@@ -33,7 +33,7 @@ fin.close()
 # hypernomad_home = '/local1/lakhdoun/HyperNOMAD/'
 # blackbox_path = hypernomad_home + 'src/blackbox/blackbox.py'
 
-syst_cmd = 'OMP_NUM_THREADS=3 python3 ' + blackbox_path + ' CIFAR10 '
+syst_cmd = 'python3 blackbox.py CIFAR10 '
 
 # syst_cmd = 'OMP_NUM_THREADS=3 python3 blackbox.py CIFAR10 '
 out_file = 'logs_training_'
