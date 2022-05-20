@@ -52,24 +52,24 @@ Lout = fout.readlines()
 score = None
 
 for line in Lout:
-    if "Final accuracy" in line:
+    if "Best valid acc" in line:
         tmp = line.split()
         score = '-' + str(tmp[3])
         cnt_eval = ' 1 '
 
-    if "Number of epochs" in line:
-        tmp = line.split()
-        epochs = str(tmp[-1]) + ' '
+    # if "Number of epochs" in line:
+    #     tmp = line.split()
+    #     epochs = str(tmp[-1]) + ' '
 
     if "MACS and NB_PARAMS" in line:
         tmp = line.split()
         # MACS then nb params
         stats = str(tmp[-2]) + ' ' + str(tmp[-1])
         fout.close()
-        print(score + cnt_eval + epochs + stats)
+        print(score + stats)
         exit()
 
 if score is None:
-    print('Inf 0 0 0 0')
+    print('Inf 0 0')
     fout.close()
 
