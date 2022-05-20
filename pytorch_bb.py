@@ -24,18 +24,13 @@
 import os
 import sys
 
-fin = open(sys.argv[2], 'r')
+fin = open(sys.argv[1], 'r')
 Lin = fin.readlines()
 Xin = Lin[0].split()
 fin.close()
 
-
-# hypernomad_home = '/local1/lakhdoun/HyperNOMAD/'
-# blackbox_path = hypernomad_home + 'src/blackbox/blackbox.py'
-
 syst_cmd = 'python3 blackbox.py CIFAR10 '
 
-# syst_cmd = 'OMP_NUM_THREADS=3 python3 blackbox.py CIFAR10 '
 out_file = 'logs_training_'
 
 for i in range(len(Xin)):
@@ -44,7 +39,6 @@ for i in range(len(Xin)):
 
 out_file += '.txt'
 syst_cmd += '> ' + out_file
-# print(syst_cmd)
 os.system(syst_cmd)
 
 fout = open(out_file, 'r')
@@ -57,10 +51,6 @@ for line in Lout:
         score = '-' + str(tmp[3])
         cnt_eval = ' 1 '
 
-    # if "Number of epochs" in line:
-    #     tmp = line.split()
-    #     epochs = str(tmp[-1]) + ' '
-
     if "MACS and NB_PARAMS" in line:
         tmp = line.split()
         # MACS then nb params
@@ -70,6 +60,6 @@ for line in Lout:
         exit()
 
 if score is None:
-    print('Inf 0 0')
+    print('Inf 0')
     fout.close()
 
