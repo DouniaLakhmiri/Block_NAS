@@ -17,9 +17,6 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # Data set
 dataset = str(sys.argv[1])
-# num_conv_layers = int(sys.argv[2])  # 0
-
-# num_full_layers = int(sys.argv[3])  # 20
 list_blocks = 10 * [-1]
 
 for i in range(10):
