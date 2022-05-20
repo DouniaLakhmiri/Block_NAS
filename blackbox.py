@@ -17,29 +17,26 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # Data set
 dataset = str(sys.argv[1])
-num_conv_layers = int(sys.argv[2])  # 0
+# num_conv_layers = int(sys.argv[2])  # 0
 
-num_full_layers = int(sys.argv[3])  # 20
-list_blocks = 30 * [-1]
+# num_full_layers = int(sys.argv[3])  # 20
+list_blocks = 10 * [-1]
 
-for i in range(20):
-    list_blocks[i] = int(sys.argv[3 + i + 1])
+for i in range(10):
+    list_blocks[i] = int(sys.argv[i + 2])
 indx = len(list_blocks)
 
-batch_size_index = 2 + (2 + num_conv_layers*5 + num_full_layers)
-batch_size = int(sys.argv[batch_size_index])
+if device == 'cuda':
+    net = torch.nn.DataParallel(model)
+    cudnn.benchmark = True
 
-# lr = float(sys.argv[batch_size_index+2])
-arg2 = float(sys.argv[batch_size_index+3])
-arg3 = float(sys.argv[batch_size_index+4])
-arg4 = float(sys.argv[batch_size_index+5])
-dropout = float(sys.argv[batch_size_index + 6])
-arg1 = float(sys.argv[batch_size_index + 2])
+batch_size = 256
 
 # Dataloaders
 dataloader = DataHandler(dataset, batch_size)
 image_size, number_classes = dataloader.get_info_data
 trainloader, testloader = dataloader.get_loaders()
+
 
 initial_image_size = 32
 total_classes = 10
@@ -47,10 +44,13 @@ number_input_channels = 3
 
 model = NeuralNet(list_blocks, initial_image_size, total_classes, number_input_channels, dropout)
 model.to(device)
-
-optimizer = optim.SGD(model.parameters(), lr=arg1, momentum=arg2, dampening=arg3, weight_decay=arg4)
-
 print(model)
+
+# Optimizer
+print('==> Defining the Optimizer and its hyperparameters..')
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.042, momentum=0.9, weight_decay=0.005)
+scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=240, eta_min=1e-8)
 
 # The evaluator trains and tests the network
 evaluator = Evaluator(device, model, trainloader, testloader, optimizer, batch_size, dataset)
